@@ -1,0 +1,28 @@
+{
+  "name": "greendock",
+  "version": "1.0.0",
+  "description": "Sample App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "express": "^4.16.2",
+    "jade": "^1.11.0",
+    "pg": "7.4.1",
+    "pg-format": "^1.0.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jscs": "^4.1.0",
+    "gulp-jshint": "^2.1.0",
+    "jshint": "^2.9.5",
+    "jshint-stylish": "^2.2.1",
+    "nodemon": "^1.14.11",
+    "wiredep": "^4.0.0"
+  }
+}

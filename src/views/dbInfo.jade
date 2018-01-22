@@ -1,0 +1,24 @@
+
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Signin Template for Bootstrap
+    // Bootstrap core CSS
+    link(href='/lib/bootstrap/dist/css/bootstrap.css', rel='stylesheet')
+    link(href='/css/style.css', rel='stylesheet')
+    // Custom styles for this template
+    link(href='signin.css', rel='stylesheet')
+  body
+    table.table.table-hover
+      thead.thead-light
+        tr
+          each val in header
+            th.text-capitalize(scope='col')= val
+      tbody
+        each t in table
+          tr
+            each h in header
+              td= t[h]
