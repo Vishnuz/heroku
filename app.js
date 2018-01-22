@@ -69,9 +69,8 @@ dbRouter.route('/')
 
         pool.connect(function(err, client, done) {
             if (err) console.log(err)
-            app.listen(3000, function() {
-                console.log('listening on 3000')
-            })
+           
+           
             client = client;
             var query = format('SELECT * FROM salesforce.contact');
             client.query(query, function(err, result) {
