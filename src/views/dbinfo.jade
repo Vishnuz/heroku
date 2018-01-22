@@ -1,3 +1,8 @@
+script.
+  function viewRecord(id){
+    window.open('/' + id);
+  }
+
 html(lang='en')
   head
     meta(charset='utf-8')
@@ -9,15 +14,18 @@ html(lang='en')
     link(href='/lib/bootstrap/dist/css/bootstrap.css', rel='stylesheet')
     link(href='/css/style.css', rel='stylesheet')
     // Custom styles for this template
-    link(href='signin.css', rel='stylesheet')
+    //link(href='signin.css', rel='stylesheet')
   body
-    table.table.table-hover
+    table#tab.table.table-hover
       thead.thead-light
         tr
           each val in header
             th.text-capitalize(scope='col')= val
+          th.text-capitalize(scope='col') Action
       tbody
         each t in table
-          tr
+          tr(id=t['id'])
             each h in header
               td= t[h]
+            td
+              a.btn.btn-primary(href='./'+ t['id']) Edit

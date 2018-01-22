@@ -1,23 +1,21 @@
 var express = require('express');
-var format = require('pg-format')
-const { Pool, Client } = require('pg');
-
+var format = require('pg-format');
 var pgConfig = {
 	client: 'postgresql',
     connectionString: process.env.DATABASE_URL || "postgres://postgres:eclipse@localhost:5432/hdb"
 };
 
-const client = new Client(pgConfig);
 
-const pool = new Pool(pgConfig);
+var dbcon = require('./src/db/dbcon');
 
-/*
-client.connect();
+var pgConnec = new dbcon(pgConfig);
 
-client.query("INSERT INTO users(firstname, lastname) values($1,$2)", ["Vishnu","Vardhan"]);
+console.log('pgConfig', pgConfig);
 
-client.query('SELECT firstname, lastname from users');
-*/
+var contactRoute = require('./src/routes/contactroute');
+
+var pgContactRoute = require('./src/routes/contactroute')(pgConnec);
+
 var app = express();
 
 var port = process.env.PORT || 5000;
@@ -60,30 +58,4 @@ app.set('views', './src/views');
 app.set('view engine', 'jade');
 
 
-var dbRouter = express.Router();
-
-dbRouter.route('/')
-    .get(function(req, res) {
-
-        pool.connect(function(err, client, done) {
-            if (err) console.log(err)
-           
-            client = client;
-            var query = format('SELECT * FROM salesforce.contact');
-            client.query(query, function(err, result) {
-                if (err) {
-                    console.log("not able to get connection " + err);
-                    res.status(400).send(err);
-                }
-                console.log(result.rows[0])
-
-
-                var tableData = result.rows;
-                var header = ['id', 'name', 'firstname', 'lastname', 'phone', 'email', 'sfid'];
-                res.render('dbinfo', { table: tableData, header: header });
-
-            });
-        })
-    });
-
-app.use('/db', dbRouter);
+app.use('/contacts', pgContactRoute.router);

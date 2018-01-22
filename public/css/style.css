@@ -3,7 +3,9 @@ body {
   height: 100%;
 }
 
-
+#tab tr{
+      cursor: pointer;
+}
 
 .form-signin {
   width: 100%;
