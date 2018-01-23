@@ -16,7 +16,7 @@ html(lang='en')
     // Custom styles for this template
     //link(href='signin.css', rel='stylesheet')
   body
-    table#tab.table.table-hover
+    table.table.table-hover
       thead.thead-light
         tr
           each val in header
@@ -28,4 +28,4 @@ html(lang='en')
             each h in header
               td= t[h]
             td
-              a.btn.btn-primary(href='./'+ t['id']) Edit
+              a.btn.btn-primary(href='/contacts/'+ t['id']) Edit

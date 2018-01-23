@@ -25,7 +25,7 @@ module.exports = function(dbcon) {
 
                     tableData = result.rows;
                     var header = ['id', 'name', 'firstname', 'lastname', 'phone', 'email', 'sfid'];
-                    res.render('dbinfo', { table: tableData, header: header });
+                    res.render('table', { table: tableData, header: header });
 
                 });
             })

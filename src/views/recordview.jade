@@ -12,15 +12,18 @@ html(lang='en')
     // Custom styles for this template
     //link(href='signin.css', rel='stylesheet')
   body
-    form
+    form(action='/saveData',method='POST',enctype='multipart/form-data')
       .form-group
-        label(for='exampleInputEmail1') Email address
-        input#exampleInputEmail1.form-control(type='email', aria-describedby='emailHelp', placeholder='Enter email', value='#{record.firstname}')
-        small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
+        label(for='inpFname') First Name
+        input#inpFname.form-control(type='text', placeholder='First Name', value='#{record.firstname}', name='firstname')
       .form-group
-        label(for='exampleInputPassword1') Password
-        input#exampleInputPassword1.form-control(type='password', placeholder='Password')
-      .form-check
-        input#exampleCheck1.form-check-input(type='checkbox')
-        label.form-check-label(for='exampleCheck1') Check me out
+        label(for='inpLname') Last Name
+        input#inpLname.form-control(type='text', placeholder='Last Name', value='#{record.lastname}', name='lastname')
+      .form-group
+        label(for='inpEmail') Email
+        input#inpEmail.form-control(type='email', placeholder='Email', value='#{record.email}', name='email')
+      .form-group
+        label(for='inpPhone') Phone
+        input#inpPhone.form-control(type='tel', placeholder='phone', value='#{record.phone}', name='phone')
+      input#recId.form-control(type='hidden', value='#{record.id}', name='id')
       button.btn.btn-primary(type='submit') Submit
