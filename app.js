@@ -66,24 +66,49 @@ var formidable = require('express-formidable')
 app.use(formidable());
 
 app.post('/saveData', function(req, res) {
- console.log(req.fields);
+			 console.log(req.fields);
 
-const { client, pool } = pgConnec;
+			const { client, pool } = pgConnec;
 
-var query = getQueryString(req.fields, 'salesforce.contact');
+			
 
-var colValues = Object.keys(req.fields).filter(function(key) {
-	return req.fields[key];
-});
 
-console.log('before query');
-console.log('before query', query);
-client.query(query, colValues, function(err, result){
-console.log('after query');
 
-	if(err) res.send(JSON.stringify(err));
-	else res.send(JSON.stringify(result));
-});
+			pool.connect(function(err, client, done) {
+                if (err) console.log(err)
+
+                client = client;
+
+
+			var query = getQueryString(req.fields, 'salesforce.contact');
+
+			var colValues = [];
+
+			/*Object.keys(req.fields).filter(function(key) {
+					if(key != 'id')
+				return req.fields[key];
+			});*/
+
+			Object.keys(req.fields)
+			.forEach(function(key){ 
+				if(key != 'id')
+				colValues.push(req.fields[key]);
+			});
+			console.log('colValues', colValues);
+
+			console.log('before query');
+			console.log('before query', query);
+			client.query(query, colValues, function(err, result){
+			console.log('err', err);
+			console.log('result', result);
+
+				if(err) res.send(JSON.stringify(err));
+				else res.send(JSON.stringify(result));
+			});
+
+               
+            })
+
 
 });
 
@@ -95,6 +120,7 @@ query.push('SET');
 
 var set = [];
 Object.keys(fieldData).forEach(function(key, i){
+	if(key != 'id')
 	set.push(key + ' =($' + (i+1) + ')');
 });
 
