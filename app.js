@@ -3,7 +3,7 @@ var format = require('pg-format');
 var formidable = require('express-formidable')
 
 var passport = require('passport');
-var session = require('express-session');
+//var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
 
