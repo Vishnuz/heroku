@@ -75,9 +75,9 @@ app.get('/', function(request, response) {
 });
 
 app.get('/Login', function(req, res) {
-
+/*
 var bcrypt = require('bcryptjs');
-
+*/
     res.render('login');
     /*
         pool.connect(function(err, client, done) {
