@@ -12,8 +12,8 @@ html(lang='en')
     // Custom styles for this template
     link(href='signin.css', rel='stylesheet')
   body.text-center
-    form.form-signin
-      img.mb-4(src='images/sapient_logo.png', alt='', width='128', height='46')
+    form.form-signin(action='/auth/login',method='POST',enctype='multipart/form-data')
+      img.mb-4(src='/images/sapient_logo.png', alt='', width='128', height='46')
       h1.h3.mb-3.font-weight-normal Please sign in
       label.sr-only(for='inputEmail') Email address
       input#inputEmail.form-control(type='email', placeholder='Email address', required='', autofocus='')
@@ -26,5 +26,5 @@ html(lang='en')
           |  Remember me
       .mt-2
         label
-          a(href='/register.html')  Forgot Password 
+          a(href='/register')  Forgot Password 
       p.mt-5.mb-3.text-muted © 2017-2018

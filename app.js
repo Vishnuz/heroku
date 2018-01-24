@@ -1,9 +1,10 @@
 var express = require('express');
 var format = require('pg-format');
 var formidable = require('express-formidable')
+var bodyParser = require('body-parser');
 
 var passport = require('passport');
-//var session = require('express-session');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
 
@@ -24,50 +25,34 @@ var contactRoute = require('./src/routes/contactroute');
 var authRoute = require('./src/routes/authroutes')(pgConnec);
 var pgContactRoute = require('./src/routes/contactroute')(pgConnec);
 
-var app = express();
-
-app.set('views', './src/views');
-app.set('view engine', 'jade');
-
-//app.use(cookieParser());
-//app.use(session({secret:'contacts'}));
-
-//require('./src/config/passport')(app);
-
-
-/*var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-
-
-app.use(express.static("public"));
-app.use(session({ secret: "cats" }));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(passport.initialize());
-app.use(passport.session());
-
-var session = require("express-session"),
-    bodyParser = require("body-parser");
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-*/
 
 var port = process.env.PORT || 5000;
 
 
+var app = express();
+
 app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+	secret:'trickyfrog',
+	save:true,
+    resave: true,
+	saveUninitialized: true
+}))
+//app.use(formidable());
+require('./src/config/passport')(app);
+
+app.set('views', './src/views');
+app.set('view engine', 'jade');
+
+
+app.use('/contacts', pgContactRoute.router);
+app.use('/auth', authRoute);
+
+
+
 //app.use(express.static('src/views'));
 
 app.get('/', function(request, response) {
@@ -106,10 +91,6 @@ app.listen(port, function(err) {
 
 
 
-app.use(formidable());
-
-app.use('/contacts', pgContactRoute.router);
-app.use('/auth', authRoute);
 
 
 app.post('/Register', function(req, res) {

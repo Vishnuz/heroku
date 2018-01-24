@@ -7,6 +7,12 @@ module.exports = function(dbcon) {
 
     const { client, pool } = dbcon;
 
+    module.router.use(function(req, res, next){
+        if(!req.user){
+            res.redirect('/auth/login');
+        }
+        next();
+    });
     module.router.route('/')
         .get(function(req, res) {
 

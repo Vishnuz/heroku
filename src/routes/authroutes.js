@@ -1,5 +1,6 @@
 var express = require('express');
 var authRouter = express.Router();
+var passport = require('passport');
 
 var router = function(dbcon){
 
@@ -12,6 +13,29 @@ var router = function(dbcon){
 	.get(function(req, res){
 		res.render('login');
 	});
+
+
+	authRouter.route('/profile')
+	.all(function(req, res, next){
+		if(!req.user){
+			res.redirect('/auth/login');
+		}
+		next();
+
+	})
+	.get(function(req, res){
+		res.json(req.user);
+	});
+
+
+	authRouter.route('/login')
+	.post(passport.authenticate('local',{
+		failureRedirect: '/'
+	}), function(req, res){
+		console.log('Hello');
+		res.redirect('/auth/profile');
+	});
+
 
 	authRouter.route('/register')
 		.post(function(req, res) {
@@ -39,8 +63,19 @@ var router = function(dbcon){
     	query += ' RETURNING *';
 
         client.query(query, colValues, function(err, result) {
-            if (err) { console.log(err); res.send(err); }
-            else { console.log(result); res.send(result); }
+            if (err) { 
+            	console.log(err); 
+            	res.send(err); 
+            }
+            else { 
+            	console.log(result); 
+
+		req.login(result, function(){
+			res.redirect('/auth/profile');
+		});
+
+            	//res.send(result); 
+            }
         });
 	    })
 	});
