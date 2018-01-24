@@ -71,7 +71,7 @@ console.log('query', query);
             else { */
             	console.log('result1', result); 
 
-		req.login(result, function(){
+		req.login(result.rows[0], function(){
 			res.redirect('/auth/profile');
 		});
 
