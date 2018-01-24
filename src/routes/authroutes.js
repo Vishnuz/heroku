@@ -51,10 +51,10 @@ var router = function(dbcon){
         	colNames = [],
         	indexes = [];
 
-        Object.keys(req.fields)
+        Object.keys(req.body)
             .forEach(function(key, i) {
             		colNames.push('vishz__' + key + '__c');
-                    colValues.push(req.fields[key]);
+                    colValues.push(req.body[key]);
                     indexes.push( '$' +  (i+1));
             });
 
@@ -62,20 +62,21 @@ var router = function(dbcon){
     	query += ' VALUES( '+ indexes.join(', ') +' )' ;
     	query += ' RETURNING *';
 
+console.log('query', query);
         client.query(query, colValues, function(err, result) {
-            if (err) { 
+           /* if (err) { 
             	console.log(err); 
             	res.send(err); 
             }
-            else { 
-            	console.log(result); 
+            else { */
+            	console.log('result1', result); 
 
 		req.login(result, function(){
 			res.redirect('/auth/profile');
 		});
 
             	//res.send(result); 
-            }
+           // }
         });
 	    })
 	});

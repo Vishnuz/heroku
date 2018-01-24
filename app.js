@@ -106,10 +106,10 @@ app.post('/Register', function(req, res) {
         	colNames = [],
         	indexes = [];
 
-        Object.keys(req.fields)
+        Object.keys(req.body)
             .forEach(function(key, i) {
             		colNames.push('vishz__' + key + '__c');
-                    colValues.push(req.fields[key]);
+                    colValues.push(req.body[key]);
                     indexes.push( '$' +  (i+1));
             });
 
@@ -126,7 +126,7 @@ app.post('/Register', function(req, res) {
 
 
 app.post('/saveData', function(req, res) {
-    console.log(req.fields);
+    console.log(req.body);
 
     const {
         client,
@@ -139,14 +139,14 @@ app.post('/saveData', function(req, res) {
         client = client;
 
 
-        var query = getQueryString(req.fields, 'salesforce.contact');
+        var query = getQueryString(req.body, 'salesforce.contact');
 
         var colValues = [];
 
-        Object.keys(req.fields)
+        Object.keys(req.body)
             .forEach(function(key) {
                 if (key != 'id')
-                    colValues.push(req.fields[key]);
+                    colValues.push(req.body[key]);
             });
         console.log('colValues', colValues);
 
