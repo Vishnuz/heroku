@@ -24,7 +24,7 @@ var router = function(dbcon){
 
 	})
 	.get(function(req, res){
-		res.json(req.user);
+        res.send( 'authenticated user --> ' + req.user.vishz__username__c);
 	});
 
 
